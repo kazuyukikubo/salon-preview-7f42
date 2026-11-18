@@ -1,0 +1,74 @@
+body.in-talk{--talk-ink:#172523;--talk-green:#087f4d;--talk-sky:#a5bbd0;--talk-border:#e3e8e6;background:#e4e9ec;color:var(--talk-ink);padding:0;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif}
+.in-talk #mast,.in-talk #foot,.in-talk #mobile{display:none}
+.in-talk #main{min-height:0;height:100vh;height:100dvh;display:grid;place-items:center}
+.talk-window{width:100%;height:100%;min-height:0;display:grid;background:white}
+.talk-sidebar{display:none}
+.talk-room{min-height:0;min-width:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden;background:var(--talk-sky)}
+.talk-header{padding:calc(10px + env(safe-area-inset-top)) 16px 10px;display:flex;align-items:center;gap:11px;border-bottom:1px solid #ffffff70;background:#f9fbfa;color:#162523;z-index:1}
+.talk-avatar{display:inline-grid;place-items:center;flex:0 0 auto;width:39px;height:39px;background:linear-gradient(135deg,#274639,#12281f);border-radius:50%;color:#e0c991;border:1px solid #294436}
+.talk-avatar .crest{width:75%;height:75%}
+.talk-name{min-width:0}.talk-name>div{display:flex;gap:6px;align-items:center;color:#248862}
+.talk-name h1{font:700 17px/1.4 -apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;letter-spacing:.015em;color:var(--talk-ink)}
+.talk-name small{font-size:10px;color:#577068}.talk-name small span{padding:0 2px}.talk-head-menu{width:44px;height:44px;margin-left:auto;border-radius:15px}
+.talk-scroll{min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;background:linear-gradient(160deg,#a2b6cf 0%,#b4c9da 100%)}
+.talk-stream{width:min(100%,700px);margin:auto;padding:16px 15px 22px}
+.talk-date{width:max-content;margin:0 auto 17px;padding:3px 13px;border-radius:30px;background:#61748b82;color:#fff;font-size:11px;font-weight:650}
+.talk-in{display:flex;align-items:flex-start;gap:8px;margin:0 0 13px;min-width:0}
+.talk-in>.talk-avatar{width:32px;height:32px;margin-top:1px}
+.talk-entry{min-width:0;max-width:min(82%,330px)}
+.talk-author{font-size:10px;color:#2d4051;display:block;margin-bottom:5px;letter-spacing:.02em}
+.talk-guide,.talk-ticket,.talk-msg{background:white;color:#1d2826;border-radius:15px;box-shadow:0 2px 5px #34465916}
+.talk-guide{overflow:hidden}
+.talk-photo{position:relative;isolation:isolate;aspect-ratio:2.34;background:#182d26;color:#fff}
+.talk-photo img,.talk-photo:after{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1}
+.talk-photo:after{content:"";background:linear-gradient(90deg,#0c1e1ae0,#101d1940 65%,#0000)}
+.talk-photo>div{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:12px 17px}
+.talk-photo small{font:600 7px/1.3 Arial,sans-serif;letter-spacing:.19em;color:#e4d7b4}
+.talk-photo b{font:normal clamp(32px,8vw,45px)/1.07 Georgia,serif;letter-spacing:-.055em}.talk-photo b span{color:#e1c692}
+.talk-photo em{font:500 8px/1.2 Arial,sans-serif;letter-spacing:.31em;margin-top:5px}
+.talk-guide-text{padding:13px 15px 11px}.talk-guide-text h2,.talk-ticket h2{font-family:inherit;font-size:16px;line-height:1.5;font-weight:700;letter-spacing:0}
+.talk-guide-text p{font-size:12px;line-height:1.65;color:#46534e;margin-top:4px}
+.talk-guide-link{display:flex;align-items:center;justify-content:center;gap:7px;padding:10px 12px;min-height:42px;border-top:1px solid #e9ebe9;color:#156744;font-size:12px;font-weight:650}
+.talk-guide-link>.ico:last-child{margin-left:auto}.talk-guide .talk-guide-link{justify-content:flex-start;padding-inline:15px}
+.talk-dock{padding-bottom:env(safe-area-inset-bottom);background:#fff;border-top:1px solid #c4cfce;box-shadow:0 -3px 12px #32443d12;z-index:1}
+.talk-quick,.talk-rich,.talk-done{width:min(100%,680px);margin:auto}
+.talk-quick{padding:8px 14px 9px}
+.talk-quick-title{display:flex;align-items:center;justify-content:space-between;min-height:39px;gap:4px}
+.talk-quick-title h2{display:flex;align-items:center;gap:6px;font-family:inherit;font-size:15px;font-weight:700;white-space:nowrap}
+.talk-quick-title h2 .ico{color:var(--talk-green)}
+.talk-quick-title button,.talk-done button{color:#416257;font-size:12px;font-weight:600;min-height:42px}
+.talk-counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.talk-counts button{display:grid;align-content:center;justify-items:center;gap:2px;min-height:70px;border:1px solid #c4d9ce;background:#f1f7f3;border-radius:13px;color:#184835;font-variant-numeric:tabular-nums}
+.talk-counts button.prime,.talk-submit{background:#06a358;color:#fff;border-color:transparent}
+.talk-counts button.prime:hover,.talk-submit:hover{background:#06864b}
+.talk-counts button:active,.talk-submit:active{transform:scale(.98)}
+.talk-counts strong{font:700 27px/1.08 Arial,sans-serif;letter-spacing:-.035em}
+.talk-counts i{font-style:normal;font-size:13px;margin-left:3px}
+.talk-counts small{font-size:10px;font-weight:650;white-space:nowrap}
+.talk-menu-toggle{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;min-height:38px;border-top:1px solid #edf0ed;color:#485a52;font-size:12px;font-weight:bold}
+.talk-rich{padding:7px 10px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}
+.talk-rich>a,.talk-rich>button{display:grid;justify-items:center;align-content:center;gap:4px;padding:5px 2px;line-height:1.25;min-height:55px;font-size:11px;color:#244b3c;border-radius:8px}
+.talk-rich>a:hover,.talk-rich>button:hover,.talk-head-menu:hover{background:#f0f5f1}
+.talk-sent{display:flex;justify-content:end;align-items:end;gap:6px;margin:16px 0}
+.talk-sent>span{font-size:9px;text-align:right;line-height:1.4;color:#344b5a}
+.talk-sent p,.talk-msg{padding:9px 12px;border-radius:16px;font-size:13px;background:#9ee981;color:#13341b}
+.talk-sent p{border-top-right-radius:4px}.talk-msg{background:#fff;color:#1b5e42;border-top-left-radius:4px}.talk-msg a{font-weight:700;text-decoration:underline}.talk-msg small{display:block;font-size:10px;margin-top:5px;color:#65706b}
+.talk-ticket{padding:14px 16px;font-size:13px}.ticket-state{display:inline-flex;align-items:center;gap:5px;color:var(--talk-green);font-size:11px;font-weight:700}.talk-ticket h2{margin:4px 0}.talk-ticket p{font-size:11px;color:#67746d;margin-top:3px}
+.talk-cancel{width:100%;min-height:40px;margin:8px 0 -6px;border-top:1px solid #e4eae7;color:#475e53;font-size:11px}
+.talk-done{min-height:90px;display:flex;align-items:center;justify-content:space-between;gap:7px;padding:12px 16px}.talk-done>span{display:flex;gap:6px;align-items:center;color:#077444;font-size:13px;font-weight:700}
+.talk-options h3{font-family:inherit;font-size:14px;margin:14px 0 6px}.talk-picks{display:flex;flex-wrap:wrap;gap:6px}
+.talk-picks button{min-height:42px;min-width:44px;padding:5px 10px;border:1px solid #d4ddd6;border-radius:9px;font-size:12px;background:white}
+.talk-picks button.chosen{color:#075e36;border-color:#25865a;background:#e2f4e8;font-weight:bold}.talk-submit{width:100%;padding:13px;border-radius:10px;margin:15px 0 8px;font-weight:bold}
+.in-talk #toast{bottom:calc(165px + env(safe-area-inset-bottom));pointer-events:none;max-width:90%}
+@media(min-width:760px){
+ .in-talk #main{padding:clamp(14px,4vh,42px) 20px}
+ .talk-window{width:min(970px,100%);height:min(880px,100%);grid-template-columns:245px minmax(0,1fr);border:1px solid #c8d1d3;border-radius:17px;overflow:hidden;box-shadow:0 12px 45px #334e5c26}
+ .talk-sidebar{display:flex;flex-direction:column;background:#f9faf9;border-right:1px solid #dce2df}
+ .talk-side-head{display:flex;align-items:center;gap:13px;padding:25px 19px 22px;font-size:19px}
+ .talk-line-logo{background:#0aaa59;color:white;border-radius:11px;padding:7px 5px;font:bold 11px/1.3 Arial,sans-serif;letter-spacing:-.05em}
+ .talk-side-selected{display:flex;align-items:center;gap:9px;background:#e7efe9;padding:14px 17px;border-left:3px solid #0c9d58}.talk-side-selected strong,.talk-side-selected small{display:block}.talk-side-selected strong{font-size:13px}.talk-side-selected small,.talk-side-bottom{font-size:11px;color:#63716b}
+ .talk-side-bottom{margin-top:auto;padding:16px 20px;border-top:1px solid #e3e7e4}
+ .talk-stream{padding:20px 24px}.talk-header{padding:12px 21px}.talk-quick{padding-inline:22px}.talk-counts button{min-height:68px}
+}
+@media(max-width:350px){.talk-quick{padding-inline:9px}.talk-stream{padding-inline:9px}.talk-entry{max-width:85%}.talk-quick-title button{font-size:11px}}
+@media(max-height:550px){.talk-header{padding-block:4px}.talk-quick{padding-block:0 4px}.talk-counts button{min-height:48px}.talk-menu-toggle{min-height:32px}.talk-quick-title{min-height:32px}.talk-quick-title button{min-height:32px}}

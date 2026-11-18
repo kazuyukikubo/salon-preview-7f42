@@ -25,7 +25,7 @@ let afterRender=null;
 let statementDate=R.now();
 let person='P-014',slide=0,bookDraft=null,deskTab='reservations',partnerTab='overview',statementPeriod='month',listScope='coming',toastTimer,chatLog=[],previousFocus;
 const isDesk=r=>r==='desk'||r==='master'||r==='metrics',isPartner=r=>r==='partner';
-const route=()=>location.hash.slice(1).split('?')[0]||'home';
+const route=()=>location.hash.slice(1).split('?')[0]||'line';
 const navTo=r=>{if(dlg.open)dlg.close();if(route()===r)render();else location.hash=r;};
 const toast=t=>{const e=$('#toast');e.textContent=t;e.classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.classList.remove('visible'),3000)};
 function persist(message){const worked=R.save();if(message)toast(worked?message:message+'（このタブ内のみ）')}
@@ -34,10 +34,10 @@ function row(icon,title,sub,action,klass=''){return `<div class="line-row ${klas
 function tabs(key,items,current){return `<div class="tabs" aria-label="表示切替">${items.map(([id,l])=>btn(key,l,id===current?'selected':'',`data-id="${id}" aria-pressed="${id===current}"`)).join('')}</div>`}
 function head(){
  const r=route(),role=isDesk(r)?'店舗運営':isPartner(r)?'パートナー':'会員';
- const nav=[['home','サロン'],['bookings','ご予約'],['card','会員証'],['contact','コンシェルジュ']];
- $('#mast').innerHTML=`<div class="mast-inner"><a class="brand" href="#home" aria-label="THE ROOF ホーム">${brand}</a><nav class="desktop-nav" aria-label="メインメニュー">${nav.map(([id,l])=>link(id,l,(r===id||id==='bookings'&&r==='book')?'active':'')).join('')}</nav><div class="head-acts">${btn('roles',ico('layers',16)+` <span>${role}ビュー</span> `+ico('chevron-down',13),'role-switch')}${btn('menu',ico('menu',22),'icon-btn', 'aria-label="全メニューを開く"')}</div></div>`;
- $('#mobile').innerHTML=[['home','house','サロン'],['bookings','calendar-days','予約'],['card','qr-code','会員証'],['mypage','user-round','マイページ']].map(([id,i,l])=>link(id,ico(i)+`<span>${l}</span>`,(r===id||id==='bookings'&&r==='book')?'on':'')).join('')+btn('menu',ico('menu')+'<span>メニュー</span>');
- $('#foot').innerHTML=`<div class="footerinner"><a href="#home" class="footbrand">THE ROOF <small>KITASHINCHI</small></a><span>体験版 ｜ 架空データ・端末内保存</span>${btn('roles','体験する役割を変更 '+ico('chevron-right',14),'footlink')}</div>`;
+ const nav=[['line','公式LINE'],['salon','サロン'],['bookings','ご予約'],['card','会員証'],['contact','コンシェルジュ']];
+ $('#mast').innerHTML=`<div class="mast-inner"><a class="brand" href="#line" aria-label="THE ROOF ホーム">${brand}</a><nav class="desktop-nav" aria-label="メインメニュー">${nav.map(([id,l])=>link(id,l,(r===id||id==='bookings'&&r==='book')?'active':'')).join('')}</nav><div class="head-acts">${btn('roles',ico('layers',16)+` <span>${role}ビュー</span> `+ico('chevron-down',13),'role-switch')}${btn('menu',ico('menu',22),'icon-btn', 'aria-label="全メニューを開く"')}</div></div>`;
+ $('#mobile').innerHTML=[['line','message-circle','公式LINE'],['bookings','calendar-days','予約'],['card','qr-code','会員証'],['mypage','user-round','マイページ']].map(([id,i,l])=>link(id,ico(i)+`<span>${l}</span>`,(r===id||id==='bookings'&&r==='book')?'on':'')).join('')+btn('menu',ico('menu')+'<span>メニュー</span>');
+ $('#foot').innerHTML=`<div class="footerinner"><a href="#line" class="footbrand">THE ROOF <small>KITASHINCHI</small></a><span>体験版 ｜ 架空データ・端末内保存</span>${btn('roles','体験する役割を変更 '+ico('chevron-right',14),'footlink')}</div>`;
 }
 const heroScenes=[{pic:'hero',en:'Terrace Lounge',caption:'テラスラウンジ'},{pic:'vip',en:'Private Suite',caption:'プライベートスイート'},{pic:'counter',en:'The Counter',caption:'バーカウンター'}];
 function hero(){const sc=heroScenes[slide];return `<section class="hero"><img class="hero-photo" src="./media/${sc.pic}.webp" alt="${sc.caption}の空間イメージ"><div class="shade"></div><div class="hero-body"><div class="hero-loc">${ico('map-pin',14)} OSAKA &nbsp;/&nbsp; KITASHINCHI</div><div class="hero-copy"><span class="gold-rule"></span><p class="hero-kicker">PRIVATE MEMBERS’ SALON</p><h1>The Roof<span class="hero-dot">.</span></h1><p class="hero-ja">北新地、最上階のプライベートサロン。</p>${btn('reserve',ico('calendar-days',17)+' お席を予約する '+arrow(),'ivory')}</div><div class="hero-bottom"><span>${sc.en}</span><div class="slider"><span>0${slide+1} / 03</span>${btn('slideback',ico('chevron-left',15),'', 'aria-label="前の空間"')}${btn('slidenext',ico('chevron-right',15),'','aria-label="次の空間"')}</div></div></div></section>`}
@@ -46,8 +46,8 @@ function quick(id,icon,ja,en){return link(id,`<span class="quick-ic">${ico(icon,
 function roomsSection(){return `<section class="rooms-section">${section('THE SPACES','サロンのお席',link('spaces','すべてのお席 '+arrow(),'text-link'))}<div class="room-grid">${R.rooms.slice(0,3).map(roomTile).join('')}</div></section>`}
 function roomTile(r){return `<button class="room-tile" data-action="room" data-id="${r.id}"><div class="room-photo"><img loading="lazy" src="./media/${r.img}.webp" alt="${r.name}の空間イメージ"><span>${ico('users',13)} ${r.min}–${r.max} 名</span></div><div class="room-foot"><div><strong>${r.en}</strong><small>${r.name}</small></div>${ico('arrow-up-right',19)}</div></button>`}
 function home(){return `<div class="container home"><div class="intro-line"><div class="overline"><span class="tinyline"></span> MEMBERS’ LOUNGE</div><span class="today">${dateLabel(R.now())}</span></div><div class="hero-grid">${hero()}${passPanel()}</div><div class="quick-grid">${quick('bookings','calendar-check','予約を確認','MY RESERVATIONS')}${quick('invite','ticket','ゲストを招待','GUEST INVITATION')}${quick('contact','message-circle','コンシェルジュ','CONCIERGE')}</div>${roomsSection()}<div class="lower-grid"><section>${section('AT THE SALON','サロンの楽しみ')}${row('wine','サロンイベント','ワイン会・テイスティング',link('events','イベントを見る '+arrow(),'text-link'))}${row('glass-water','ボトルキープ','お預かりしているボトル',link('bottles','ボトルを見る '+arrow(),'text-link'))}</section><section>${section('DEMO ACCESS','体験ビュー')}${row('handshake','紹介パートナー','ご紹介・実績・支払明細',link('partner','開く '+arrow(),'text-link'))}${row('store','店舗運営','予約台帳・会計・支払承認',link('desk','開く '+arrow(),'text-link'))}</section></div></div>`}
-function roleMenu(){modal('EXPERIENCE','体験する役割',`<p class="muted">同じ架空の予約を、役割ごとの画面で確認できます。</p>${[['home','user-round','会員','お席の予約・会員証・招待'],['partner','handshake','紹介パートナー','顧客のご紹介・日次明細・支払実績'],['desk','store','店舗運営','予約受付・売上確定・報酬計算・承認']].map(([id,i,t,s])=>link(id,row(i,t,s,arrow()),'role-row')).join('')}`)}
-function menu(){modal('SALON DIRECTORY','メニュー',`<div class="menu-list">${[['home','サロンホーム'],['spaces','空間・営業時間'],['book','新しい予約'],['bookings','予約一覧'],['card','デジタル会員証'],['mypage','マイページ'],['invite','紹介・入会体験'],['events','イベント'],['bottles','ボトルキープ'],['contact','コンシェルジュ'],['line','LINEメニュー体験'],['partner','紹介パートナー'],['desk','店舗運営']].map(([id,l])=>link(id,l+ico('chevron-right',15))).join('')}</div>${btn('reset','体験データを初期化','quiet')}`)}
+function roleMenu(){modal('EXPERIENCE','体験する役割',`<p class="muted">同じ架空の予約を、役割ごとの画面で確認できます。</p>${[['salon','user-round','会員','お席の予約・会員証・招待'],['partner','handshake','紹介パートナー','顧客のご紹介・日次明細・支払実績'],['desk','store','店舗運営','予約受付・売上確定・報酬計算・承認']].map(([id,i,t,s])=>link(id,row(i,t,s,arrow()),'role-row')).join('')}`)}
+function menu(){modal('SALON DIRECTORY','メニュー',`<div class="menu-list">${[['line','公式LINEトーク'],['salon','サロンホーム'],['spaces','空間・営業時間'],['book','新しい予約'],['bookings','予約一覧'],['card','デジタル会員証'],['mypage','マイページ'],['invite','紹介・入会体験'],['events','イベント'],['bottles','ボトルキープ'],['contact','コンシェルジュ'],['line','LINEメニュー体験'],['partner','紹介パートナー'],['desk','店舗運営']].map(([id,l])=>link(id,l+ico('chevron-right',15))).join('')}</div>${btn('reset','体験データを初期化','quiet')}`)}
 function spaces(){return page('THE SPACES','空間と営業時間',`<div class="periods">${R.periods.map(p=>`<article><small>${p.hours}</small><h3>${p.en}</h3><p>${p.name}</p></article>`).join('')}</div><div class="room-grid all-rooms">${R.rooms.map(roomTile).join('')}</div>`)}
 function roomInfo(id){const r=R.room(id);modal('THE SPACES',r.en,`<img class="dialog-img" src="./media/${r.img}.webp" alt="${r.name}の空間イメージ"><h3>${r.name}</h3><p>${r.desc}</p>${kv([['ご利用人数',`${r.min}〜${r.max}名`],['予約枠',r.id==='mama'?'紹介パートナー専用':'会員・ご紹介ゲスト']])}${btn('start-room','このお席を予約 '+arrow(),'primary',`data-id="${id}"`)}`)}
 
@@ -90,8 +90,7 @@ function bottles(){return page('BOTTLE KEEP','ボトルキープ',`<section clas
 function contact(){return page('CONCIERGE','コンシェルジュ',`<div class="two-col"><section class="surface"><h2>お問い合わせ</h2>${form('contact',field('ご相談内容',sel('topic',['予約について','会員証について','ゲストの紹介','その他']))+field('メッセージ（デモ用）','<textarea maxlength="180" name="message" required placeholder="例：静かな席を希望します。実際の個人情報は入力しないでください。"></textarea>')+submit('デモで送信'))}</section><section class="surface"><h2>やり取り</h2>${R.s.contacts.map(x=>row('message-circle',safe(x.topic),safe(x.message),pill(x.reply?'返信あり':'受付済'))+(x.reply?`<p class="reply">${safe(x.reply)}</p>`:'')).join('')||empty('この端末で受け付けたご相談が表示されます。')}</section></div>`)}
 const richLinks=[['mypage','user-round','マイページ'],['card','qr-code','会員証'],['book','calendar-days','予約'],['contact','message-circle','お問い合わせ']];
 
-function line(){return page('LINE EXPERIENCE','LINEメニュー体験',`<section class="chat surface"><div class="chat-head">${monogram}<div><strong>THE ROOF KITASHINCHI</strong><small>公式アカウントの操作イメージ</small></div></div><div class="bubble">ようこそ。メニューを選ぶと、5分間有効のデモリンクをご案内します。</div>${chatLog.map(x=>`<p class="bubble mine">${safe(x.label)}</p><div class="bubble">こちらからお進みください。<br>${link('access?id='+encodeURIComponent(x.id),safe(x.label)+'を開く '+arrow(),'text-link')}<small>発行から5分間有効</small></div>`).join('')}<div class="rich-menu">${richLinks.map(([id,ic,l])=>btn('issue-token',ico(ic,24)+l,'',`data-id="${id}"`)).join('')}</div></section>`)}
-
+const talk=window.createRoofTalk({R,monogram,ico,btn,link,safe,modal,row,empty,richLinks,persist,render,toast,dateLabel,getPerson:()=>person,getChatLog:()=>chatLog});
 function metricsTiles(items){return `<div class="metric-grid">${items.map(([a,b])=>`<div class="metric"><span>${a}</span><strong>${b}</strong></div>`).join('')}</div>`}
 const sum=(rows,fn)=>rows.reduce((a,b)=>a+fn(b),0);
 const terminal=b=>b.status!=='売掛';
@@ -160,25 +159,27 @@ function exportPay(){
 }
 function render(){
  const r=route();
+ document.body.classList.toggle('in-talk', r==='line'||r==='home');
  if(dlg.open)dlg.close();
  if(r==='access'){const q=new URLSearchParams(location.hash.split('?')[1]||''),id=q.get('id');let token;try{token=JSON.parse(sessionStorage.getItem('roof-link'))}catch{ /* Storage may be disabled in private browsing. */ }if(token&&token.id===id&&token.exp>Date.now()&&richLinks.some(x=>x[0]===token.target)){location.replace('#'+token.target);return}head();main.innerHTML=page('MEMBER ACCESS','リンクの有効期限が切れました',`<div class="surface"><p>LINEメニューから新しいリンクを発行できます。</p>${link('line','再発行する '+arrow(),'primary')}</div>`);return}
- const renderers={home,spaces,book:bookingPage,bookings:bookingList,card:memberCard,mypage:myPage,invite,events,bottles,contact,line,partner:partnerView,desk};
- head();main.innerHTML=(renderers[r]||home)();document.title=(main.querySelector('h1')?.innerText||'サロン')+' ｜ THE ROOF KITASHINCHI';if(afterRender){const next=afterRender;afterRender=null;next()}}
+ const renderers={home:talk.page,salon:home,spaces,book:bookingPage,bookings:bookingList,card:memberCard,mypage:myPage,invite,events,bottles,contact,line:talk.page,partner:partnerView,desk};
+ head();main.innerHTML=(renderers[r]||talk.page)();if(document.body.classList.contains('in-talk'))talk.position();document.title=(main.querySelector('h1')?.innerText||'サロン')+' ｜ THE ROOF KITASHINCHI';if(afterRender){const next=afterRender;afterRender=null;next()}}
 function runAction(action,id){
  const s=R.s,b=id?R.booking(id):null,t=id?billBy(id):null;
+ if(action.startsWith('talk-')){talk.action(action,id);return}
  switch(action){
  case 'menu':menu();break;case 'roles':roleMenu();break;
  case 'reserve':startBook();break;case 'start-room':startBook(id,id==='mama'?'partner':'member');break;case 'partner-reserve':startBook('mama','partner');break;case 'staff-reserve':startBook('counter','staff');break;
  case 'room':roomInfo(id);break;case 'card':navTo('card');break;
  case 'slidenext':case 'slideback':slide=(slide+(action==='slidenext'?1:2))%3;$('.hero').outerHTML=hero();document.querySelector(`[data-action="${action}"]`)?.focus({preventScroll:true});break;
  case 'book-back':bookDraft.step=1;render();break;case 'book-confirm':confirmBook();break;
- case 'list-scope':listScope=id;render();break;case 'details':showBooking(id);break;case 'edit-book':if(b?.status==='予約済')startBook(b.room,'member',b);break;
+ case 'list-scope':listScope=id;render();break;case 'details':showBooking(id);break;case 'edit-book':if(b?.status==='予約済')startBook(b.room,b.quickTalk?'partner':'member',b);break;
  case 'cancel-ask':modal('CANCEL RESERVATION','予約を取り消しますか',`<p>${safe(id)} のデモ予約を取り消します。</p><div class="action-group">${btn('cancel-confirm','取り消しを確定','primary',`data-id="${safe(id)}"`)}<button class="outline" data-close>戻る</button></div>`);break;
- case 'cancel-confirm':if(b?.status==='予約済'){b.status='取消済';listScope='all';persist('予約を取り消しました');render()}break;
+ case 'cancel-confirm':if(b?.status==='予約済'){b.status='取消済';if(b.guest===activeMember)listScope='all';persist('予約を取り消しました');render()}break;
  case 'join-invite':modal('GUEST ENROLLMENT','招待からの入会',form('enroll',`<input type="hidden" name="id" value="${safe(id)}"><p>架空のゲストとして招待状を受け取り、入会を体験します。</p><label class="check"><input type="checkbox" required> デモ会員として登録する</label>${submit('入会手続きを完了')}`));break;
  case 'event':{const i=s.events.indexOf(id);if(i>=0)s.events.splice(i,1);else s.events.push(id);persist(i<0?'イベント参加を受け付けました':'参加を取り消しました');render();break}
  case 'bottle':{const item=s.bottles.find(x=>x.id===id);if(item?.left){item.left--;persist('1杯分のデモ提供を記録しました');render()}break}
- case 'issue-token':{const item=richLinks.find(x=>x[0]===id);if(!item)break;const token={id:R.id('L')+'-'+Math.random().toString(36).slice(2,8),target:id,exp:Date.now()+300000};try{sessionStorage.setItem('roof-link',JSON.stringify(token))}catch{ /* Storage may be disabled in private browsing. */ }chatLog.push({label:item[2],id:token.id});persist();render();break}
+ case 'issue-token':{const item=richLinks.find(x=>x[0]===id);if(!item)break;const token={id:R.id('L')+'-'+Math.random().toString(36).slice(2,8),target:id,exp:Date.now()+300000};try{sessionStorage.setItem('roof-link',JSON.stringify(token))}catch{ /* Storage may be disabled in private browsing. */ }chatLog.push({label:item[2],id:token.id,at:Date.now()});talk.closeMenu();persist();render();break}
  case 'partner-tab':partnerTab=id;render();break;case 'period':statementPeriod=id;render();break;case 'statement':emitStatement();break;
  case 'benefit':if(id==='points'){const points=ledgerRows(person).length*100;modal('PARTNER POINTS','紹介ポイント台帳',kv([['サンプルポイント',points+' pt'],['付与の例','確定した紹介伝票1件につき100 pt']]))}else if(!s.benefits.includes(person+id)){modal('PARTNER ALLIANCE','提携・特典の申込',`<p>${safe({event:'イベント協力',ambassador:'アンバサダー',benefit:'体験特典'}[id])}の希望をデモ登録します。</p>${btn('apply-offer','希望を登録','primary',`data-id="${safe(id)}"`)}`)}else toast('申込を受け付けています');break;
  case 'apply-offer':if(!s.benefits.includes(person+id))s.benefits.push(person+id);persist('希望を登録しました');render();break;
@@ -199,7 +200,7 @@ function runAction(action,id){
  case 'add-partner':editPartner();break;case 'open-partner':editPartner(id);break;
  case 'reply':modal('CONCIERGE REPLY','相談に返信',form('reply',`<input type="hidden" name="id" value="${safe(id)}">${field('デモ返信','<textarea name="text" maxlength="180" required>ご相談を承りました。担当よりご案内いたします。</textarea>')}${submit('返信を記録')}`));break;
  case 'reset':modal('RESET DEMO','体験データを初期化',`<p>このブラウザで作成した架空の予約・明細を初期サンプルに戻します。</p>${btn('reset-ok','初期状態に戻す','primary')}`);break;
- case 'reset-ok':R.reset();chatLog=[];try{sessionStorage.removeItem('roof-link')}catch{ /* Storage may be disabled in private browsing. */ }bookDraft=null;person='P-014';deskTab='reservations';partnerTab='overview';navTo('home');toast('初期状態に戻しました');break;
+ case 'reset-ok':R.reset();chatLog=[];talk.reset();try{sessionStorage.removeItem('roof-link')}catch{ /* Storage may be disabled in private browsing. */ }bookDraft=null;person='P-014';deskTab='reservations';partnerTab='overview';navTo('home');toast('初期状態に戻しました');break;
  }}
 document.addEventListener('click',e=>{
  const close=e.target.closest('[data-close]');if(close){dlg.close();return}

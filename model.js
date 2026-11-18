@@ -32,8 +32,9 @@ window.Roof = (() => {
     ],bills:[{id:'T-5001',booking:'R-1012',parts:[28000,44000,30000,8000],discount:0,refund:0,adjustments:[],status:'支払済',date:prior,due:nextWorking(prior),shares:[['P-014',1]],mode:'内包',withheld:false,gross:false,round:'切捨て',paid:11000}],
     invites:[], events:[], messages:[], alerts:[], benefits:[], bottles:[{id:'B-01',name:'シングルモルト',left:4}],contacts:[],closures:[],offsets:{},seq:1200};
   }
-  function read(){try{const s=JSON.parse(localStorage.getItem(key));if(s?.v===1&&Array.isArray(s.bookings))return s}catch{ /* Storage may be disabled in private browsing. */ }return seed()}
-  let s=read();
+  function read(){try{const s=JSON.parse(localStorage.getItem(key));if(s?.v===1&&Array.isArray(s.bookings))return s}catch{ /* Storage may be disabled in private browsing. */ }return null}
+  let s=read()||seed();
+  const refresh=()=>{const current=read();if(current)s=current};
   const save=()=>{try{localStorage.setItem(key,JSON.stringify(s));return true}catch{return false}};
   const id=(prefix)=>prefix+'-'+(++s.seq);
   const reset=()=>{s=seed();save();return s};
@@ -65,5 +66,5 @@ window.Roof = (() => {
     if(b.ref===b.second)return '重複紹介は異なる紹介者をお選びください。';
     return '';
   }
-  return {get s(){return s},rooms,periods,routes,now,shift,nextWorking,visitTime,room,partner,booking,capacity,available,shares,amounts,forPartner,payout,validateBooking,save,reset,id};
+  return {get s(){return s},rooms,periods,routes,now,shift,nextWorking,visitTime,room,partner,booking,capacity,available,shares,amounts,forPartner,payout,validateBooking,refresh,save,reset,id};
 })();
